@@ -1,0 +1,35 @@
+Sub CopyToWord()
+    Dim WdApp As Object
+    Dim WdDoc As Object
+    Dim wb As Workbook
+    Dim ws As Worksheet
+    Dim rng As Range
+    Dim strFile As String
+    Dim strDocName As String
+    
+    ' Get Filename & document
+    Set WdApp = CreateObject("Word.Application")
+    WdApp.Visible = True
+    Set WdDoc = WdApp.Documents.Add
+    
+    ' Get data from Excel
+    Set wb = ActiveWorkbook
+    Set ws = wb.Sheets("Ëèñò1")
+    Set rng = ws.Range("A1:C3")
+    
+    ' Copy data from Excel to Word
+    rng.Copy
+    WdDoc.Paragraphs(1).Range.PasteExcelTable LinkedToExcel:=False, WordFormatting:=False, RTF:=False
+    
+    ' Save document & close Word
+    WdDoc.SaveAs2 ("C:\Users\ProBook\Desktop\Excel-Word\Export.docx"), FileFormat:=wdFormatText
+    WdDoc.Close
+    WdApp.Quit
+    
+    ' Clean cache
+    Set WdDoc = Nothing
+    Set WdApp = Nothing
+    Set ws = Nothing
+    Set wb = Nothing
+    
+End Sub
