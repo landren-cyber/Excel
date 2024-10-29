@@ -1,35 +1,34 @@
 Sub CopyToWord()
-    Dim WdApp As Object
-    Dim WdDoc As Object
-    Dim wb As Workbook
-    Dim ws As Worksheet
-    Dim rng As Range
-    Dim strFile As String
-    Dim strDocName As String
-    
-    ' Get Filename & document
-    Set WdApp = CreateObject("Word.Application")
-    WdApp.Visible = True
-    Set WdDoc = WdApp.Documents.Add
-    
-    ' Get data from Excel
-    Set wb = ActiveWorkbook
-    Set ws = wb.Sheets("Ëèñò1")
-    Set rng = ws.Range("A1:C3")
-    
-    ' Copy data from Excel to Word
-    rng.Copy
-    WdDoc.Paragraphs(1).Range.PasteExcelTable LinkedToExcel:=False, WordFormatting:=False, RTF:=False
-    
-    ' Save document & close Word
-    WdDoc.SaveAs2 ("C:\Users\ProBook\Desktop\Excel-Word\Export.docx"), FileFormat:=wdFormatText
-    WdDoc.Close
-    WdApp.Quit
-    
-    ' Clean cache
-    Set WdDoc = Nothing
-    Set WdApp = Nothing
-    Set ws = Nothing
-    Set wb = Nothing
-    
+ Dim wdApp As Object
+ Dim wdDoc As Object
+ Dim rng As Range
+ 
+ ' Открываем новый документ Word
+ Set wdApp = CreateObject("Word.Application")
+ wdApp.Visible = True
+ Set wdDoc = wdApp.Documents.Add
+ 
+ ' Получаем диапазон ячеек из Excel
+ Set rng = ActiveSheet.Range("A1")
+ 
+ ' Копируем диапазон в Word
+ rng.Copy
+ wdDoc.Paragraphs(1).Range.PasteExcelTable LinkedToExcel:=False, WordFormatting:=False, RTF:=False
+ 
+ ' Форматируем шрифт в Times New Roman
+ With wdDoc.Paragraphs(1).Range.Font
+.Name = "Times New Roman"
+.Size = 14
+ End With
+ 
+ ' Сохраняем и закрываем документ Word
+ wdDoc.SaveAs "C:\Path\To\Document.docx"
+ wdDoc.Close
+ 
+ ' Закрываем приложение Word
+ wdApp.Quit
+ 
+ ' Освобождаем объекты
+ Set wdDoc = Nothing
+ Set wdApp = Nothing
 End Sub
