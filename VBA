@@ -8,7 +8,7 @@ Sub CopyToWord()
  wdApp.Visible = True
  Set wdDoc = wdApp.Documents.Add
  
- ' Получаем диапазон ячеек из Excel
+ ' Получаем диапазон ячеек из Excel (Set rng = ws.Range("A1"))
  Set rng = ActiveSheet.Range("A1")
  
  ' Копируем диапазон в Word
@@ -17,8 +17,8 @@ Sub CopyToWord()
  
  ' Форматируем шрифт в Times New Roman
  With wdDoc.Paragraphs(1).Range.Font
-.Name = "Times New Roman"
-.Size = 14
+     .Name = "Times New Roman"
+     .Size = 14
  End With
  
  ' Сохраняем и закрываем документ Word
