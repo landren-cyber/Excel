@@ -8,7 +8,7 @@ Sub CopyToWord()
  wdApp.Visible = True
  Set wdDoc = wdApp.Documents.Add
  
- ' Получаем диапазон ячеек из Excel (Set rng = ws.Range("A1"); ActiveSheet.Range("A1"))
+ ' Получаем диапазон ячеек из Excel
  Set rng = ActiveCell
  
  ' Копируем диапазон в Word
