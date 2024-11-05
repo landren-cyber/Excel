@@ -29,9 +29,8 @@ Sub CopyToWord()
     Set ws = wb.Sheets("Sheet1")
     Set rng = Selection
     
-    ' Ïðîâåðêà íà íàëè÷èå äàííûõ
+    ' Getting data
     If wdDoc.Paragraphs.Count > 0 Then
-        ' Äîáàâëÿåì äàííûå â êîíåö äîêóìåíòà
         rng.Copy
         wdDoc.Paragraphs(wdDoc.Paragraphs.Count).Range.PasteExcelTable LinkedToExcel:=False, WordFormatting:=False, RTF:=False
     Else
