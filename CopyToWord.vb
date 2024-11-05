@@ -58,4 +58,3 @@ Sub CopyToWord()
     Set wb = Nothing
     
 End Sub
-
