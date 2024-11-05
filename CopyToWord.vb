@@ -1,4 +1,4 @@
-Sub CopyToWordAndAppend()
+Sub CopyToWord()
     Dim wdApp As Object
     Dim wdDoc As Object
     Dim wb As Workbook
@@ -12,7 +12,7 @@ Sub CopyToWordAndAppend()
     strFile = ActiveWorkbook.FullName
     strDocName = Right(strFile, Len(strFile) - InStrRev(strFile, "."))
     
-    ' Open file & create new document
+    ' Opening and creating a new document
     On Error Resume Next
     Set wdApp = GetObject(, "Word.Application")
     If wdApp Is Nothing Then
@@ -24,14 +24,14 @@ Sub CopyToWordAndAppend()
     End If
     On Error GoTo 0
     
-    ' Get data from Excel
+    ' Getting data from Excel
     Set wb = ActiveWorkbook
     Set ws = wb.Sheets("Sheet1")
     Set rng = Selection
     
-    ' Checking for data availability
+    ' Ïðîâåðêà íà íàëè÷èå äàííûõ
     If wdDoc.Paragraphs.Count > 0 Then
-        ' Adding the data to the end of the document
+        ' Äîáàâëÿåì äàííûå â êîíåö äîêóìåíòà
         rng.Copy
         wdDoc.Paragraphs(wdDoc.Paragraphs.Count).Range.PasteExcelTable LinkedToExcel:=False, WordFormatting:=False, RTF:=False
     Else
@@ -39,16 +39,20 @@ Sub CopyToWordAndAppend()
         wdDoc.Paragraphs(1).Range.PasteExcelTable LinkedToExcel:=False, WordFormatting:=False, RTF:=False
     End If
     
-    ' New font
-    With wdDoc.Paragraphs(1).Range.Font
+    ' Checking for data availability
+    With wdDoc.Paragraphs
+    For i = 1 To wdDoc.Paragraphs.Count
+    With wdDoc.Paragraphs(i).Range.Font
         .Name = "Times New Roman"
-        .Size = 14
+        .Size = 11
+    End With
+        Next i
     End With
     
-    ' Saving document
+    ' Saving a document
     wdDoc.SaveAs "export.docx"
     
-    ' Clearing the cache
+    ' Clearing the cache 
     Set wdDoc = Nothing
     Set wdApp = Nothing
     Set ws = Nothing
