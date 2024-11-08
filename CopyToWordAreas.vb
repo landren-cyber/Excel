@@ -41,7 +41,7 @@ Sub CopyToWordAreas()
 
         ' Pasting the table into Word
         currentArea.Copy
-        wdDoc.Paragraphs.Last.Range.PasteExcelTable _
+        wdDoc.Paragraphs.Add.Range.PasteExcelTable _
             LinkedToExcel:=False, _
             WordFormatting:=False, _
             RTF:=False
