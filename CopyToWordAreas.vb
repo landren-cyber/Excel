@@ -52,7 +52,7 @@ Sub CopyToWordAreas()
         For i = 1 To wdDoc.Paragraphs.Count
             With wdDoc.Paragraphs(i).Range.Font
                 .Name = "Times New Roman"
-                .Size = 11
+                .Size = 12
             End With
         Next i
     End With
