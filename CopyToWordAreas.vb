@@ -19,7 +19,7 @@ Sub CopyToWordAreas()
     Set wdApp = GetObject(, "Word.Application")
     If wdApp Is Nothing Then
        Set wdApp = CreateObject("Word.Application")
-       wdApp.Visible = True
+           wdApp.Visible = True
        Set wdDoc = wdApp.Documents.Add
     Else
        Set wdDoc = wdApp.ActiveDocument
