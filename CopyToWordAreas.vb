@@ -57,6 +57,22 @@ Sub CopyToWordAreas()
         Next i
     End With
 
+    ' Removing extra spaces
+    With wdDoc.Content.Find
+        .ClearFormatting
+        .Text = "^13"
+        .Replacement.Text = " "
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+        .Execute Replace:=wdReplaceAll
+    End With
+
     ' Saving a document
     wdDoc.SaveAs "export.docx"
 
