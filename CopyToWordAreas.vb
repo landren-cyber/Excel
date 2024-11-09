@@ -9,11 +9,9 @@ Sub CopyToWordAreas()
     Dim FinalRow As Long
     Dim areaCount As Integer
     Dim currentArea As Range
-
     ' File name
     strFile = ActiveWorkbook.FullName
     strDocName = Right(strFile, Len(strFile) - InStrRev(strFile, "."))
-
     ' Opening and creating a new document
     On Error Resume Next
     Set wdApp = GetObject(, "Word.Application")
@@ -25,12 +23,10 @@ Sub CopyToWordAreas()
        Set wdDoc = wdApp.ActiveDocument
     End If
     On Error GoTo 0
-
     ' Getting data from Excel
     Set wb = ActiveWorkbook
     Set ws = wb.Sheets("Sheet1")
     Set rng = Selection
-
     ' Processing each selected range individually
     areaCount = rng.Areas.Count
     For Each currentArea In rng.Areas
@@ -38,7 +34,6 @@ Sub CopyToWordAreas()
         If areaCount > 1 And Not currentArea Is rng.Areas(1) Then
             wdDoc.Content.InsertParagraphAfter
         End If
-
         ' Pasting the table into Word
         currentArea.Copy
         wdDoc.Paragraphs.Add.Range.PasteExcelTable _
@@ -46,7 +41,6 @@ Sub CopyToWordAreas()
             WordFormatting:=False, _
             RTF:=False
     Next currentArea
-
     ' Formatting font in all paragraphs
     With wdDoc.Paragraphs
         For i = 1 To wdDoc.Paragraphs.Count
@@ -56,10 +50,10 @@ Sub CopyToWordAreas()
             End With
         Next i
     End With
-
     ' Removing extra spaces
     With wdDoc.Content.Find
         .ClearFormatting
+        .Replacement.ClearFormatting
         .Text = "^13"
         .Replacement.Text = " "
         .Forward = True
@@ -72,10 +66,24 @@ Sub CopyToWordAreas()
         .MatchAllWordForms = False
         .Execute Replace:=wdReplaceAll
     End With
-
+    ' Removing extra paragraphs
+    With wdDoc.Content.Find
+        .ClearFormatting
+        .Replacement.ClearFormatting
+        .Text = "^13^13"
+        .Replacement.Text = "^13"
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+        .Execute Replace:=wdReplaceAll
+    End With
     ' Saving a document
     wdDoc.SaveAs "export.docx"
-
     ' Clearing the cache
     Set wdDoc = Nothing
     Set wdApp = Nothing
