@@ -50,7 +50,7 @@ Sub CopyToWordAreas()
             End With
         Next i
     End With
-    ' Removing extra spaces
+        ' Removing extra spaces
     With wdDoc.Content.Find
         .ClearFormatting
         .Replacement.ClearFormatting
@@ -66,7 +66,7 @@ Sub CopyToWordAreas()
         .MatchAllWordForms = False
         .Execute Replace:=wdReplaceAll
     End With
-    ' Removing extra paragraphs
+     ' Removing extra paragraphs
     With wdDoc.Content.Find
         .ClearFormatting
         .Replacement.ClearFormatting
@@ -83,7 +83,7 @@ Sub CopyToWordAreas()
         .Execute Replace:=wdReplaceAll
     End With
     ' Saving a document
-    wdDoc.SaveAs "export.docx"
+    wdDoc.SaveAs FileName:=strDocName, FileFormat:=wdFormatDocument
     ' Clearing the cache
     Set wdDoc = Nothing
     Set wdApp = Nothing
