@@ -28,7 +28,7 @@ Sub CopyToWordAreas()
 
     ' Getting data from Excel
     Set wb = ActiveWorkbook
-    Set ws = wb.Sheets("Ëèñò1")
+    Set ws = wb.Sheets("Sheet1")
     Set rng = Selection
 
     ' Processing each selected range individually
