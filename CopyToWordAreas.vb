@@ -58,7 +58,7 @@ Sub CopyToWordAreas()
     End With
 
     ' Saving a document
-    wdDoc.SaveAs "export.docx"
+    wdDoc.SaveAs Filename:=strDocName, FileFormat:=wdFormatDocument
 
     ' Clearing the cache
     Set wdDoc = Nothing
